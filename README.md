@@ -10,5 +10,6 @@ Main repo for organisation for EPO2 project
 |Alje|Ja|
 |Runi| Ja|
 |Olaf| Ja| 
-|Boyan| Ja| 
+|Boyan| Ja|
+|Casper|Ja| |
 
