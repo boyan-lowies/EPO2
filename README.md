@@ -12,6 +12,15 @@ Main repo for organisation for EPO2 project
 |Runi| Ja|
 |Olaf| Ja| 
 |Boyan| Ja|
-|Casper|Ja| 
+|Casper|Ja|
+
+## Projectplan tasks
+
+- Introduction: Rooni
+- Project results: Roos
+- Project activities: Jim
+- Organisation and schedule: Boyan
+- Risk analysis: Melle
+- Conclusion: Olaf 
 
 
