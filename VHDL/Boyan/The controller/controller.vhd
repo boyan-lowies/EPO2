@@ -4,10 +4,14 @@ use IEEE.numeric_std.all;
 
 entity controller is
     port (
-        sensors_out         :in std_logic_vector(2 downto 0);
-        clk                 :in std_logic;
-        direction_l         :out std_logic_vector(1 downto 0);
-        direction_r         :out std_logic_vector(1 downto 0)
+        sensors_in         :in     std_logic_vector(2 downto 0);
+        clk                 :in     std_logic;
+        reset               :in     std_logic;
+        count               :in     std_logic_vector(19 downto 0);
+
+        direction_l         :out    std_logic_vector(1 downto 0);
+        direction_r         :out    std_logic_vector(1 downto 0);
+        reset_i             :out    std_logic
     );
 end entity controller;
 
@@ -21,54 +25,71 @@ architecture beheivioal of controller is
                                 c_right
 );
 
-    signal state   :controller_state;
+    signal state, newstate   :controller_state;
 
 begin
-    process(clk)
+    process(clk, count)
     begin
-            if sensors_out = "000" or sensors_out = "010" or sensors_out = "101" or sensors_out = "111" then
-                state <= c_forward;
-            
-            elsif sensors_out = "001" then
-                state <= c_g_left;
-            
-            elsif sensors_out = "011" then
-                state <= c_left;
-            
-            elsif sensors_out = "100" then
-                state <= c_g_right;
-            
-            elsif sensors_out = "110" then
-                state <= c_right;
+        if count = "11110100001001000000" or reset = '1' then
+            state <= c_reset;
+        else
+            state <= newstate;
         end if;
+        
     end process;
 
-    process(state)
+    process(state, sensors_in)
     begin
         case state is
-            when c_forward =>
-                direction_l <= "01";
-                direction_r <= "10";
-                
-            when c_g_left =>
-                direction_l <= "00";
-                direction_r <= "10";
-            
-            when c_left =>
-                direction_l <= "10";
-                direction_r <= "10";
-            
-            when c_g_right =>
-                direction_l <= "01";
-                direction_r <= "00";
-            
-            when c_right =>
-                direction_l <= "01";
-                direction_r <= "01";
             
             when c_reset =>
                 direction_l <= "00";
                 direction_r <= "00";
+                reset_i <= '1';
+            
+                if sensors_in = "000" or sensors_in = "010" or sensors_in = "101" or sensors_in = "111" then
+                    newstate <= c_forward;
+                
+                elsif sensors_in = "001" then
+                    newstate <= c_g_left;
+                
+                elsif sensors_in = "011" then
+                    newstate <= c_left;
+                
+                elsif sensors_in = "100" then
+                    newstate <= c_g_right;
+                
+                elsif sensors_in = "110" then
+                    newstate <= c_right;
+
+                end if;
+
+            when c_forward =>
+                direction_l <= "01";
+                direction_r <= "10";
+                reset_i <= '0';
+                
+            when c_g_left =>
+                direction_l <= "00";
+                direction_r <= "10";
+                reset_i <= '0';
+            
+            when c_left =>
+                direction_l <= "10";
+                direction_r <= "10";
+                reset_i <= '0';
+            
+            when c_g_right =>
+                direction_l <= "01";
+                direction_r <= "00";
+                reset_i <= '0';
+            
+            when c_right =>
+                direction_l <= "01";
+                direction_r <= "01";
+                reset_i <= '0';
+            
+
         end case;
     end process;
 end architecture beheivioal;

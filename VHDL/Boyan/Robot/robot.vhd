@@ -40,12 +40,17 @@ architecture structural of robot is
     
     component controller is
         port (
-            sensors_out         :in std_logic_vector(2 downto 0);
-            clk                 :in std_logic;
-            direction_l         :out std_logic_vector(1 downto 0);
-            direction_r         :out std_logic_vector(1 downto 0)
+            sensors_in         :in     std_logic_vector(2 downto 0);
+            clk                 :in     std_logic;
+            reset               :in     std_logic;
+            count               :in     std_logic_vector(19 downto 0);
+    
+            direction_l         :out    std_logic_vector(1 downto 0);
+            direction_r         :out    std_logic_vector(1 downto 0);
+            reset_i             :out    std_logic
         );
     end component controller;
+    
 
     component timebase is
         port(
@@ -58,21 +63,11 @@ architecture structural of robot is
     signal direction_l, direction_r         :std_logic_vector(1 downto 0);
     signal count                            :std_logic_vector(19 downto 0);
     signal reset_i                          :std_logic;                         --Internal reset for counter and such
-    signal sensors_out                      :std_logic_vector(2 downto 0);
+    signal sensors                      :std_logic_vector(2 downto 0);
 
 begin
 
-    process(clk)
-    begin
-        if reset = '1' then
-            reset_i <= '1';
-        elsif reset_i = '1'then
-            reset_i <= '0' after 20ns;
-        elsif count = "11110100001001000000" then
-            reset_i <= '1';
-        end if;
-    end process;
-
+ 
     MCL: motorcontrol port map(
                                 clk             =>  clk,
                                 reset           =>  reset_i,
@@ -94,14 +89,17 @@ begin
                                 sensor_m_in     =>  sensor_m_in,
                                 sensor_r_in     =>  sensor_r_in,
                                 clk             =>  clk,
-                                sensors_out     =>  sensors_out
+                                sensors_out     =>  sensors
     );
 
     CT: controller port map(
-                                sensors_out     =>  sensors_out,
+                                sensors_in      =>  sensors,
                                 clk             =>  clk,
-                                direction_l     =>  direction_l,
-                                direction_r     =>  direction_r
+                                reset           =>  reset,
+                                count           =>  count,
+                                direction_l     => direction_l,
+                                direction_r     => direction_r,
+                                reset_i         => reset_i
     );
 
     TB: timebase port map(
