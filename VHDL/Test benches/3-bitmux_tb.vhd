@@ -24,6 +24,7 @@ architecture structural of threebitmux_tb is
     
     signal set_i      :std_logic_vector(2 downto 0);
     signal output_i   :std_logic_vector(3 downto 0);
+    signal output_v   :std_logic_vector(3 downto 0);
 
 begin
     
@@ -47,6 +48,6 @@ begin
         dataG   =>  "0111",
         dataH   =>  "1000",
         set     =>  set_i,  
-        output  =>  output_i
+        output  =>  output_v
     );
 end architecture structural;
