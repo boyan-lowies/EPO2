@@ -4,13 +4,10 @@ use IEEE.numeric_std.all;
 
 entity linefollower is
     port (
-        sensors_in         :in     std_logic_vector(2 downto 0);
+        sensors_in          :in     std_logic_vector(2 downto 0);
         clk                 :in     std_logic;
         reset               :in     std_logic;
-        count               :in     std_logic_vector(19 downto 0);
-
-        direction_l         :out    std_logic_vector(1 downto 0);
-        direction_r         :out    std_logic_vector(1 downto 0);
+        direction           :out    std_logic_vector(3 downto 0)
     );
 end entity linefollower;
 
@@ -27,7 +24,7 @@ architecture beheivioal of linefollower is
     signal state, newstate   :controller_state;
 
 begin
-    process(clk, count)
+    process(clk)
     begin
         if reset = '1' then
             state <= c_reset;
@@ -42,9 +39,7 @@ begin
         case state is
             
             when c_reset =>
-                direction_l <= "00";
-                direction_r <= "00";
-                reset_i <= '1';
+                direction <= "0000";
             
                 if sensors_in = "000" or sensors_in = "010" or sensors_in = "101" or sensors_in = "111" then
                     newstate <= c_forward;
@@ -64,30 +59,19 @@ begin
                 end if;
 
             when c_forward =>
-                direction_l <= "01";
-                direction_r <= "10";
-                reset_i <= '0';
+                direction <= "0110";
                 
             when c_g_left =>
-                direction_l <= "00";
-                direction_r <= "10";
-                reset_i <= '0';
+                direction <= "0010";
             
             when c_left =>
-                direction_l <= "10";
-                direction_r <= "10";
-                reset_i <= '0';
+                direction <= "1010";
             
             when c_g_right =>
-                direction_l <= "01";
-                direction_r <= "00";
-                reset_i <= '0';
+                direction <= "0100";
             
             when c_right =>
-                direction_l <= "01";
-                direction_r <= "01";
-                reset_i <= '0';
-            
+                direction <= "0101";
 
         end case;
     end process;
