@@ -4,6 +4,7 @@ use IEEE.numeric_std.all;
 
 entity threebitmux is
     port (
+        clk         :in std_logic;
         dataA       :in std_logic_vector(3 downto 0);
         dataB       :in std_logic_vector(3 downto 0);
         dataC       :in std_logic_vector(3 downto 0);
@@ -21,8 +22,9 @@ end entity threebitmux;
 architecture behavioral of threebitmux is
     
 begin
-    process(set)
+    process(clk,set)
     begin
+    if rising_edge(clk) then
         case set is
             when "000" =>
                 output <= dataA;
@@ -51,5 +53,6 @@ begin
             when others =>
                 output <= "0000";
         end case;
+    end if;
     end process;
 end architecture behavioral;
