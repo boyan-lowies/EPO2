@@ -11,15 +11,15 @@ architecture behavioural of uart_tb is
             clk             : in std_logic ;
             reset           : in std_logic ;
         
-            rx              : in std_logic ;                             -- input bit stream
-            tx              : out std_logic ;                            -- output bit stream
+            rx              : in std_logic ;                           -- input bit stream
+            tx              : out std_logic ;                          -- output bit stream
         
-            data_in         : in std_logic_vector (7 downto 0) ;    -- byte to be sent
-            buffer_empty    : out std_logic ;                  -- flag ’1’ if tx buffer empty
-            write           : in std_logic ;                          -- flag ’1’ to write to tx buffer
+            data_in         : in std_logic_vector (7 downto 0) ;       -- byte to be sent
+            buffer_empty    : out std_logic ;                          -- flag ’1’ if tx buffer empty
+            write           : in std_logic ;                           -- flag ’1’ to write to tx buffer
         
-            data_out        : out std_logic_vector (7 downto 0) ;  -- received byte
-            data_ready      : out std_logic ;                    -- flag ’1’ if new data in rx buffer
+            data_out        : out std_logic_vector (7 downto 0) ;      -- received byte
+            data_ready      : out std_logic ;                          -- flag ’1’ if new data in rx buffer
             read            : in std_logic                             -- flag ’1’ to read from rx buffer
          );
          end component uart ;
