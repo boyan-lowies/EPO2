@@ -71,6 +71,7 @@ architecture structural of robot is
 
 begin
 
+    set <= (0 => sel, others => '0'); 
  
     MCL: motorcontrol port map(
                                 clk             =>  clk,

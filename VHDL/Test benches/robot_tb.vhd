@@ -17,11 +17,13 @@ architecture structural of robot_tb is
             sensor_r_in     :in std_logic;
     
             motor_l_pwm     :out std_logic;
-            motor_r_pwm     :out std_logic       
+            motor_r_pwm     :out std_logic;
+            
+            sel             :std_logic
         );
     end component robot;
 
-    signal clk, reset                       :std_logic;
+    signal clk, reset, sel                       :std_logic;
     signal sensor_l, sensor_m, sensor_r     :std_logic;
     signal sensors                          :std_logic_vector(2 downto 0);
     signal motor_l_pwm, motor_r_pwm         :std_logic;
@@ -31,13 +33,16 @@ begin
     lbl0: robot port map (
                             clk => clk,
                             reset => reset,
-                            sensor_l_in => sensor_l,
-                            sensor_m_in => sensor_m,
-                            sensor_r_in => sensor_r,
+                            sensor_l_in => sensor_l, 
+                            sensor_m_in => sensor_m, 
+                            sensor_r_in => sensor_r, 
                             motor_l_pwm => motor_l_pwm,
-                            motor_r_pwm => motor_r_pwm
+                            motor_r_pwm => motor_r_pwm,
+                            sel => sel
     );
 
+    sel         <=  '0',
+                    '1' after 150ms;
     clk         <=  '0' after 0ns,
                     '1' after 10 ns when clk /= '1' else '0' after 10 ns;
     reset       <=  '1' after 0ns,
