@@ -7,7 +7,8 @@ entity uart_tb is
         reset   :in std_logic;
         clk     :in std_logic;
         rx      :in std_logic;
-        tx      :out std_logic
+        tx      :out std_logic;
+        leds    :out std_logic_vector(2 downto 0)
     );
 end entity uart_tb;
 
@@ -34,7 +35,10 @@ architecture behavioural of uart_tb is
          signal data_in, data_out                           :std_logic_vector(7 downto 0);
 
 begin
-        
+    
+    leds(0)  <= write;
+    leds(1)  <= rx;
+    leds(2)  <= read;
     
     data_in <=  "10101010";
     
