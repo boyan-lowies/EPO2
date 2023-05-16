@@ -31,24 +31,28 @@ architecture behavioural of uart_tb is
          );
          end component uart ;
         
-         signal buffer_empty, write, data_ready, read       :std_logic;
+         signal buffer_empty, write, data_ready, read, test       :std_logic;
          signal data_in, data_out                           :std_logic_vector(7 downto 0);
 
 begin
     
     leds(0)  <= write;
     leds(1)  <= rx;
-    leds(2)  <= read;
+    leds(2)  <= test;
     
     data_in <=  "10101010";
     
-    process(clk)
+    process(clk, reset)
     begin
+        if rising_edge(clk) then
         if reset = '1' then
             write   <=  '0',
                         '1' after 160ns,
-                        '0' after 180ns; 
+                        '0' after 180ns;
+            test    <=  '1',
+                        '0' after 1000 ms; 
         end if;
+    end if;
     end process;      
 
     conn: uart port map(
