@@ -3,6 +3,12 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity uart_tb is
+    port(
+        reset   :in std_logic;
+        clk     :in std_logic;
+        rx      :in std_logic;
+        tx      :out std_logic
+    );
 end entity uart_tb;
 
 architecture behavioural of uart_tb is
@@ -24,8 +30,8 @@ architecture behavioural of uart_tb is
          );
          end component uart ;
         
-         signal clk, reset, rx, tx, buffer_empty, write, data_ready, read       :std_logic;
-         signal data_in, data_out                                               :std_logic_vector(7 downto 0);
+         signal buffer_empty, write, data_ready, read       :std_logic;
+         signal data_in, data_out                           :std_logic_vector(7 downto 0);
 
 begin
         
