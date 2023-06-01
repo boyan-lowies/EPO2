@@ -3,6 +3,16 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity threebitmux_tb is
+    port(
+        setA        :in std_logic;
+        setB        :in std_logic;
+        setC        :in std_logic;
+
+        outputA     :out std_logic;
+        outputB     :out std_logic;
+        outputC     :out std_logic;
+        outputD     :out std_logic
+    );
 end entity threebitmux_tb;
 
 architecture structural of threebitmux_tb is
@@ -27,17 +37,14 @@ architecture structural of threebitmux_tb is
     signal output_v   :std_logic_vector(3 downto 0);
 
 begin
+    set_i(2)    <= setA;
+    set_i(1)    <= setB;
+    set_i(0)    <= setC;
+    outputA     <= output_v(3);
+    outputB     <= output_v(2);
+    outputC     <= output_v(1);
+    outputD     <= output_v(0);
     
-    set_i <=    "000",
-                "001" after 20ns,
-                "010" after 40ns,
-                "011" after 60ns,
-                "100" after 80ns,
-                "101" after 100ns,
-                "110" after 120ns,
-                "111" after 140ns;
-                
-
     MUX: threebitmux port map(
         dataA   =>  "0001",
         dataB   =>  "0010",
