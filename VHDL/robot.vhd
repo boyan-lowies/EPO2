@@ -21,7 +21,8 @@ end entity robot;
 
 architecture structural of robot is
     component motorcontrol is
-        port (  clk         :in std_logic;
+        port (  
+                clk         :in std_logic;
                 reset       :in std_logic;
                 direction   :in std_logic_vector(1 downto 0); --none = 00, ccw = 01, cw = 10
                 count_in    :in std_logic_vector(19 downto 0);
