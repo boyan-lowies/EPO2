@@ -4,6 +4,7 @@ use IEEE.numeric_std.all;
 
 entity threebitmux_tb is
     port(
+        clk         :in std_logic;
         setA        :in std_logic;
         setB        :in std_logic;
         setC        :in std_logic;
@@ -18,6 +19,7 @@ end entity threebitmux_tb;
 architecture structural of threebitmux_tb is
     component threebitmux is
         port (
+            clk         :in std_logic;
             dataA       :in std_logic_vector(3 downto 0);
             dataB       :in std_logic_vector(3 downto 0);
             dataC       :in std_logic_vector(3 downto 0);
@@ -33,7 +35,6 @@ architecture structural of threebitmux_tb is
     end component threebitmux;
     
     signal set_i      :std_logic_vector(2 downto 0);
-    signal output_i   :std_logic_vector(3 downto 0);
     signal output_v   :std_logic_vector(3 downto 0);
 
 begin
@@ -46,6 +47,7 @@ begin
     outputD     <= output_v(0);
     
     MUX: threebitmux port map(
+        clk     =>  clk,
         dataA   =>  "0001",
         dataB   =>  "0010",
         dataC   =>  "0011",
