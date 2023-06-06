@@ -24,12 +24,14 @@ architecture beheivioal of linefollower is
     signal state, newstate   :controller_state;
 
 begin
-    process(clk)
+    process(clk, reset)
     begin
-        if reset = '1' then
-            state <= c_reset;
-        else
-            state <= newstate;
+        if rising_edge(clk) then
+            if reset = '1' then
+                state <= c_reset;
+            else
+                state <= newstate;
+            end if;
         end if;
         
     end process;
