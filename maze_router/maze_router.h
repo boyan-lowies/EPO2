@@ -39,6 +39,8 @@ int nodeDetected(Node *current) {
     previous_dx * dx + previous_dy * dy
   );
 
+  printf("Theta: %f\n", theta);
+
   // 0 = -90deg, 1 = 0deg, 2 = 90deg, 3 = 180deg
   int angle = (int) (theta / M_PI * 180) / 90 + 1;
 

@@ -41,25 +41,41 @@ void initSerial() {
 
 void runChallengeA()
 {
+    //
     int stations[3] = {2, 7, 6};
     Node *current = challengeA(stations);
     
-    gets(byteBuffer);
+    int ready = 0;
+    while(!ready) {
+        gets(byteBuffer);
+        if (byteBuffer[0] == 's') {
+            ready = 1;
+        }
+    }
+
+    // Go forward
+    byteBuffer[0] = (char)1;
+    writeByte(hSerial, byteBuffer);
+
     while (1)
     {
-        // gets(byteBuffer);
-
-        // if (byteBuffer[0] == 'q') // end the loop by typing 'q'
-        // break;
-
-        // writeByte(hSerial, byteBuffer);
         readByte(hSerial, byteBuffer);
 
+        // Node reached
         if (byteBuffer[0] == 'z')
         {
-            int angle = nodeDetected(current);
+            printf("Node reached\n");
+            
             current = current->next;
+
+            printf("Current node: (%d,%d)\n", current->x, current->y);
+
+            int angle = nodeDetected(current);
+            
+            printf("Angle to next node: %i\n", angle);
+
             byteBuffer[0] = (char)angle;
+                
             writeByte(hSerial, byteBuffer);
         }
     }
