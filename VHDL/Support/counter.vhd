@@ -3,18 +3,19 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 -- Setting ports that are used
-entity counter is
+entity minez is
 	port (	clk		: in	std_logic;
 		line_out	: in	std_logic;
 
 		mine		: out	std_logic :='0'  -- Please enter upper bound
 	);
-end entity counter;
+end entity minez;
 
 -- Timebase function
-architecture behavioural of counter is
+architecture behavioural of minez is
+	
 	type states is (one, two, three, four);
-    	signal next_state, state : states;
+   signal next_state, state : states;
 	signal count, new_count		:unsigned(19 downto 0);
 	signal new_mine, reset		:std_logic;
 
@@ -62,7 +63,7 @@ begin
 	begin
 		new_count <= count + 1;
 
-		if (count > to_unsigned(4950,20) and count < to_unsigned(6300,20)) then
+		if (count > to_unsigned(5000,20) and count < to_unsigned(6000,20)) then
 			new_mine <= '1';
 		else
 			new_mine <= '0';

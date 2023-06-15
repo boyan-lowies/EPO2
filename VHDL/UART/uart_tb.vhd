@@ -36,13 +36,14 @@ architecture behavioural of uart_tb is
 
 begin
     
-    leds(0)  <= write;
-    leds(1)  <= rx;
-    leds(2)  <= test;
+    leds(0)  <= test;
+    leds(1)  <= write;
+    leds(2)  <= reset;
     
     data_in <=  "10101010";
-    
-    process(clk, reset)
+    				read		<= '0';
+					
+    process(clk)
     begin
         if rising_edge(clk) then
         if reset = '1' then
@@ -50,7 +51,10 @@ begin
                         '1' after 160ns,
                         '0' after 180ns;
             test    <=  '1',
-                        '0' after 1000 ms; 
+                        '0' after 100 ms; 
+			
+
+				
         end if;
     end if;
     end process;      
