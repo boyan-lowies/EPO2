@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <string.h>
 
-#define COMPORT "COM5"
+#define COMPORT "COM7"
 #define BAUDRATE CBR_9600
 
 //--------------------------------------------------------------
@@ -33,7 +33,7 @@ void initSio(HANDLE hSerial){
         //error setting serial port state
         printf("error setting state \n");
     }
-
+ 
     timeouts.ReadIntervalTimeout = 50;
     timeouts.ReadTotalTimeoutConstant = 50;
     timeouts.ReadTotalTimeoutMultiplier = 10;
@@ -60,7 +60,7 @@ int readByte(HANDLE hSerial, char *buffRead) {
     {
         printf("error reading byte from input buffer \n");
     }
-    printf("Byte read from read buffer is: %c \n", buffRead[0]);
+    // printf("Byte read from read buffer is: %c \n", buffRead[0]);
     return(0);
 }
 
@@ -80,54 +80,4 @@ int writeByte(HANDLE hSerial, char *buffWrite){
     printf("Byte written to write buffer is: %c \n", buffWrite[0]);
 
     return(0);
-}
-
-int main()
-{
-    HANDLE hSerial;
-
-
-    char byteBuffer[BUFSIZ+1];
-
-    //----------------------------------------------------------
-    // Open COMPORT for reading and writing
-    //----------------------------------------------------------
-    hSerial = CreateFile(COMPORT,
-        GENERIC_READ | GENERIC_WRITE,
-        0,
-        0,
-        OPEN_EXISTING,
-        FILE_ATTRIBUTE_NORMAL,
-        0
-    );
-
-    if(hSerial == INVALID_HANDLE_VALUE){
-        if(GetLastError()== ERROR_FILE_NOT_FOUND){
-            //serial port does not exist. Inform user.
-            printf(" serial port does not exist \n");
-        }
-        //some other error occurred. Inform user.
-        printf(" some other error occured. Inform user.\n");
-    }
-
-    //----------------------------------------------------------
-    // Initialize the parameters of the COM port
-    //----------------------------------------------------------
-
-    initSio(hSerial);
-
-    while ( 1 ) {
-        gets(byteBuffer);
-
-        if (byteBuffer[0] == 'q') // end the loop by typing 'q'
-            break;
-
-        writeByte(hSerial, byteBuffer);
-        readByte(hSerial, byteBuffer);
-    }
-
-    printf("ZIGBEE IO DONE!\n");
-    return 0;
-
-    CloseHandle(hSerial);
 }
