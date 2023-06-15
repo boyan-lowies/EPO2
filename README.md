@@ -14,13 +14,12 @@ Main repo for organisation for EPO2 project
 |Boyan| Ja| Ja| Afgemeld |Ja| Afgemeld |
 |Casper|Ja| Ja | Ja | Ja| Ja |
 
-## Projectplan tasks
+## Team indeling
+|C|VHDL|Sensor |
+|---|---|---|
+|Melle | Boyan | Roos |
+|Jim | Olaf| Alje |
+|Runi | | Casper|
 
-- Introduction: Rooni
-- Project results: Roos
-- Project activities: Jim
-- Organisation and schedule: Boyan
-- Risk analysis: Melle
-- Conclusion: Olaf 
 
 
